@@ -166,7 +166,7 @@ class SDCServer {
       output += "}";
   #else
       output += "<li><a href=\"";
-      output += (entry.isDirectory()? entry.name(): path+"/"+entry.name());
+      output += (entry.isDirectory()? entry.name(): path+entry.name());
       output += "\">";
       output += entry.name();
       output += "</a>";
@@ -616,12 +616,9 @@ public:
     
   bool write(DATA *d) {
     if (OPENED && FILE && !FIFO->full()) {
-      if (COUNT == 0) {
-        START = d->msec;
-        d->msec = 0;
-      } else {
-        d->msec -= START;
-      }
+      if (COUNT == 0) START = d->msec;
+      d->msec -= START;
+      //
       COUNT++;
       FIFO->put(d);
       return true;

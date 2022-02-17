@@ -20,6 +20,11 @@
 #include "M5Lib.hpp"
 
 
+// PC conf
+Preferences RC_PREF;
+#define RC_MAGIC  12345678
+
+
 // RC Link
 ESP32NowRC RC_LINK;
 M5_ADS1X15 AD_CONV;
@@ -68,18 +73,25 @@ float IMU_pitch,IMU_roll,IMU_yaw;
 
 
 // SD LOGGER
-#define BUF_SIZE  128
+#define BUF_SIZE  256
 SDCServer SDC_SERV;
 DataFILE<RX2TX> LOG_FILE(BUF_SIZE);
 char *LOG_NAME(int peer) {
   static char buf[64];
+  static int ses = -1;
   static int seq = 0;
-  sprintf(buf,"/log/p%02d-s%02d-i%df%d.bin",peer,seq++,2,sizeof(RX2TX)/sizeof(float)-2);
+  if (ses < 0) {
+    RC_PREF.begin("LOG_NAME");
+    ses = RC_PREF.getInt("session",0);
+    RC_PREF.putInt("session",ses+1);
+    RC_PREF.end();
+  }
+  sprintf(buf,"/b%02d-s%02d-p%02d-i%df%d.bin", (ses)%100,(seq++)%100, peer, 2,sizeof(RX2TX)/sizeof(float)-2);
   return buf;
 }
 
 
-// LCD
+// LCD conf
 TFT_eSprite LCD_MENU = TFT_eSprite(&M5.Lcd);
 TFT_eSprite LCD_PLOT = TFT_eSprite(&M5.Lcd);
 #define BG_COLOR  TFT_BLACK
@@ -90,10 +102,20 @@ TFT_eSprite LCD_PLOT = TFT_eSprite(&M5.Lcd);
 #define RX_COLOR  (RCV_FREQ.getFreq()>0? TFT_GREEN: TFT_RED) 
 
 
-// Prop conf
-Preferences RC_PREF;
-#define KEY_WORD  12345678
 
+////////////////////////////////////////////////////////////////////////////////
+// TX_FACE: M5送信機のユーザーインターフェイス
+//  setup(): 初期化
+//  loop(): 定期実行
+// 備考1: 送信機パラメータの永続化
+//  当クラスのメンバ変数（static以外）は全て永続化対象
+//  送信機パラメータはsetup()で初期化、パラメータ更新して保存する場合はsave()を呼ぶ
+//  メニュー操作でパラメータ更新した場合、増減あり（dir!=0）かつBボタン押しでsave()を呼ぶ
+// 備考2: スクロールメニューの追加方法
+//  1.表示MENU()に追記する
+//  2.処理UPDATE()に追記する
+//  3.定数MENU_MAXを調整する（MENUのswitch文ラベルの最大値以上ならOK）
+////////////////////////////////////////////////////////////////////////////////
 class TX_FACE {
   #define NAME_SIZE  8
   #define NAME_CHAR  "ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789 "
@@ -142,7 +164,7 @@ public:
       GAIN[n][7] = 0;
       sprintf(NAME[n],"MODEL%02d",n);
     }
-    MAGIC = KEY_WORD;
+    MAGIC = RC_MAGIC;
   }
   void load() {
     if (RC_PREF.begin(RC_LINK_NAME)) {
@@ -159,7 +181,7 @@ public:
   void setup() {
     // prefs
     load();
-    if (MAGIC != KEY_WORD) {
+    if (MAGIC != RC_MAGIC) {
       init();
       save();
     }
@@ -228,8 +250,8 @@ public:
     return 50.0 * (1.0 + y);
   }
   // MENU function
-  #define MENU_MIN  7
   #define MENU_MAX  70
+  #define MENU_MIN  7
   #define MENU_LEN  (LCD_ROWS - MENU_MIN - 3)
   static int pos;
   static int dir;
@@ -484,11 +506,11 @@ public:
 #endif
       // CALL
       case 60: dir = 0; break;
-      case 61: TX_PAIRING = 1; dir = 0; break;
-      case 62: dancing = dancing ^ 0x1; dir = 0; break;
-      case 63: dancing = dancing ^ 0x2; dir = 0; break;
-      case 64: logging = logging ^ 0x1; dir = 0; if (logging&0x1) LOG_FILE.open(LOG_NAME(PEER)); else LOG_FILE.close(); break;
-      case 65: logging = logging ^ 0x2; dir = 0; if (logging&0x2) SDC_SERV.setup(); else SDC_SERV.stop(); break;
+      case 61: dir = 0; TX_PAIRING = 1; break;
+      case 62: dir = 0; dancing = dancing ^ 0x1; break;
+      case 63: dir = 0; dancing = dancing ^ 0x2; break;
+      case 64: dir = 0; if (!(logging&0x2)) { logging = logging ^ 0x1; if (logging&0x1) LOG_FILE.open(LOG_NAME(PEER)); else LOG_FILE.close(); }; break;
+      case 65: dir = 0; if (!(logging&0x1)) { logging = logging ^ 0x2; if (logging&0x2) SDC_SERV.setup(); else SDC_SERV.stop(); }; break;
       case 66: EDIT(NAME[PEER]); break;
     }
   }
@@ -612,12 +634,14 @@ int TX_FACE::pos_max = 0;
 int TX_FACE::dancing = 0;
 int TX_FACE::logging = 0;
 
+
 // callback when data is sent from Master to Slave
 unsigned long SentCount = 0;
 void OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status) {
   SentCount++;
   SND_FREQ.touch();
 }
+
 
 // callback when data is recv from Slave
 unsigned long RecvCount = 0;
@@ -696,7 +720,7 @@ void loopTX()
   AD_CONV.getPercents(CHAN,RC_CHAN_MAX);
   for (int i=0; i<RC_CHAN_MAX; i++) {
     //TX_DATA.usec[i] = RC_CONF.map2usec(i, AD_CONV.getPercent(i));
-    CHAN[i] = CHAN_LPF[i].update(CHAN[i]);
+    //CHAN[i] = CHAN_LPF[i].update(CHAN[i]);
     if (i==0) CHAN_ADC[0] = RC_CONF.mapFloat(CHAN[0], 10.,90., 0.,100.);
     if (i==1) CHAN_ADC[1] = RC_CONF.mapFloat(CHAN[1], 25.,75., 0.,100.);
     TX_DATA.usec[i] = RC_CONF.map2usec(i, CHAN_ADC[i]);
@@ -704,6 +728,7 @@ void loopTX()
   
   // RC TX
   if (TX_COUNT > 0) {
+    // 設定パケット
     TX_COUNT--;
     // conf
     RX_CONF.conf = 1;
@@ -740,6 +765,7 @@ void loopTX()
     delay(100);
     DEBUG.println("send CONF");
   } else {
+    // 制御パケット
     TX_DATA.conf = 0;
     esp_now_send(RC_LINK.peerTX(RC_CONF.PEER), (uint8_t*)&TX_DATA, sizeof(TX_DATA));
   }
