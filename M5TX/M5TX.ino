@@ -265,6 +265,9 @@ public:
     LCD_MENU.fillScreen(BG_COLOR);
     LCD_MENU.setCursor(0,0);
     LCD_MENU.setTextColor(BG_COLOR,FG_COLOR);
+    if (TX_PAIRING) LCD_MENU.setTextColor(BG_COLOR,TFT_YELLOW);
+    if (logging&0x1) LCD_MENU.setTextColor(BG_COLOR,TFT_RED);
+    if (logging&0x2) LCD_MENU.setTextColor(BG_COLOR,TFT_GREEN);
     //LCD_MENU.printf(" %-12s\n", txt);
     //LCD_MENU.printf(" %-7s%02d:%02d\n", txt,RTC_TIME.Hours,RTC_TIME.Minutes);
     if (TX_PAIRING) {

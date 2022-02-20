@@ -261,7 +261,7 @@ float PulsePort::MEAN[PulsePort::MAX];
 ////////////////////////////////////////////////////////////////////////////////
 // class M5_DRV8833{}: フルブリッド型ドライバ利用ESC（Arduino版OSSをESP32化、PWM周波数可変機能を追加）
 //  setup(): ESCの初期化
-//  drive(): ESCの速度制御
+//  drive(): ESCの速度調整
 // https://github.com/TheDIYGuy999/DRV8833
 // DRV8833.h - Library for the Texas Instruments DRV8833 motor driver.
 // Created by TheDIYGuy999 June 2016
@@ -521,7 +521,7 @@ public:
 
 ////////////////////////////////////////////////////////////////////////////////
 // class ServoPID{}: PID（比例、積分、微分）制御アルゴリズム（QuickPIDのラッパ）
-//  setup(): PID制御の初期化 
+//  setup(): PID制御のパラメータ変更
 //  loop(): PID制御の出力計算
 ////////////////////////////////////////////////////////////////////////////////
 #include <QuickPID.h>
@@ -543,8 +543,8 @@ public:
     Min = 1000 - Mean;
     Max = 2000 - Mean;
     //
-    QPID = new QuickPID(&Input, &Output, &Setpoint, 1.0,0.0,0.0, QuickPID::DIRECT);
-    QPID->SetMode(QuickPID::AUTOMATIC);
+    QPID = new QuickPID(&Input, &Output, &Setpoint, 1.0,0.0,0.0, QuickPID::Action::direct);
+    QPID->SetMode(QuickPID::Control::automatic);
     QPID->SetOutputLimits(Min,Max);
     QPID->SetSampleTimeUs(1000000/50);
   }
@@ -557,7 +557,7 @@ public:
   
     QPID->SetTunings(Kp,Ki,Kd);
     QPID->SetOutputLimits(Min,Max);
-    QPID->SetSampleTimeUs(1000000/Hz);
+    QPID->SetSampleTimeUs(Hz>=50? 1000000/Hz: 1000000/50);
   }
   void setupT(float Kp, float Ti, float Td, int MIN=1000, int MEAN=1500, int MAX=2000, int Hz=50) {
     if (Ti <= 0.0) Ti = 1.0;

@@ -54,8 +54,8 @@ float USEC[RC_CHAN_MAX];
 // PWM for ESC on Grove-connector
 #if defined(_M5ATOM_H_)
 //#define _M5ATOM_LED_  1
-//M5_DRV8833 ESC_PWM(GRV_PIN[0],GRV_PIN[1], 4,5);
-M5_DRV8833 ESC_PWM(PWM_PIN[2],PWM_PIN[3], 4,5);
+M5_DRV8833 ESC_PWM(GRV_PIN[0],GRV_PIN[1], 4,5);
+//M5_DRV8833 ESC_PWM(PWM_PIN[2],PWM_PIN[3], 4,5);
 #elif defined(_M5STICKC_H_)
 M5_DRV8833 ESC_PWM(GRV_PIN[0],GRV_PIN[1], 4,5);
 #endif

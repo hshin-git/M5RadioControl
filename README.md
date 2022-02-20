@@ -1,13 +1,16 @@
 # M5RadioControl
-DIY radio control system by M5Stack series
+DIY Radio Control system by M5Stack
 
-- M5RadioControlは、RCシステムをM5Stackシリーズのマイコンで自作するためのオープンソースソフトウェアです。
-- RCシステムの標準機能（トリム、反転、D/R、EPA、EXPなど）に加えて、ユニークな独自機能を実装しています。
-- 独自機能は、送信機TXの傾斜でサーボを動かすダンシング機能、受信機RXのIMUテレメータ／ロギング機能、ドリフト用ジャイロ機能等です。
-- 送信機TXはM5Stack Grey、受信機RXはM5Atom/M5StickCで動作確認しています。
+- M5RadioControlは、RCシステム（通称、RCメカ）の送受信機TX/RXをM5Stackマイコンで自作するためのオープンソースソフトウェアです。
+- RCメカのスタンダードな機能（ペアリング、トリム、リバース、D/R、EPA、EXP設定など）に加えて、ユニークな機能を実装しています。
+- ユニークな機能は、送信機TXの傾斜により操縦するダンシング機能、受信機RXの慣性計測値のテレメータ表示／ロギング機能等です。
+- 送信機TXは"M5Stack Grey"、受信機RXは"M5Atom Matrix/M5StickC"で動作確認しています。
+- 送受信機TX/RX間の通信は、"ESP Now"を利用し、下り（TX→RX）約100Hz、上り（RX→TX）約300Hz、到達距離20m程度です。
 
 
 # DEMO
+
+![IMG_RC_SYSTEM](https://user-images.githubusercontent.com/64751855/154823502-b6f40bb0-9fc7-4578-9e62-ac9f5db41d3a.jpg)
 
 
 # Features
