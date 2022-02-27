@@ -12,7 +12,7 @@ DIY Radio Control system by M5Stack
 
 # DEMO
 
-M5RCシステムをRCカーやミニ四区へ搭載した事例です。
+M5RCシステムをRCカーやミニ四駆へ搭載した事例です。
 
 ![M5RC_GR02](https://user-images.githubusercontent.com/64751855/155876897-721a2c08-705e-47fc-a46e-67b262cabae8.jpg)
 
