@@ -33,9 +33,12 @@ M5RCシステムをタミヤのRCカー（グラスホッパー２）とミニ�
 RCカー搭載IMUのテレメータ／ロギングにより、貴方専用の「走る実験室」を実現できます。
 走行データの定量分析により、貴方はホンダのF-1エンジニア気分でRCカーをセッティングできます。
 
-以下は、[RCカー練習場「元気っ子さん」](https://genkikkosan.com/)ミニ四駆コースの走行データ例です。
+以下は、[RCカー練習場「元気っ子さん」](https://genkikkosan.com/)ミニ四駆コースの走行データ例（三週目でコースアウト笑）です。
 ![M4WD-plot](https://user-images.githubusercontent.com/64751855/155877157-9e4e1bb6-cacd-4e34-a1aa-a5ffe0449518.png)
-![M4WD-traj](https://user-images.githubusercontent.com/64751855/155877205-44e6fe6a-db0b-4bdb-b37e-8a9ab7ada5a0.png)
+![M4WD-traj](https://user-images.githubusercontent.com/64751855/156074555-eef4edac-f4a1-41a3-a283-c758bf34b154.png)
+
+なおシャーシ固定座標系は、右方がX軸、前方がY軸、上方がZ軸です。
+3D軌跡は、車速がスロットル（ch2）に比例すると仮定して、AHRS計算値（pitch、yaw）を積算した結果です。
 
 
 ## ステアリング・ジャイロ機能
@@ -51,6 +54,8 @@ PIDコントローラのパラメータは、プロポ（送信機）側メニ�
 ## ドレミファ・インバータ機能
 ブラシモーターのスイッチング周波数をタイマやスロットルに応じてプログラムできます。
 例えばVVVFインバータ調サウンドにプログラムすると、貴方は電車運転士の気分です。
+
+![RAILWAY_HDR](https://user-images.githubusercontent.com/64751855/156074703-8c3c4c0f-50f9-492a-83f9-2223110b4df2.jpg)
 
 
 # Requirement
