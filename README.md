@@ -3,16 +3,16 @@ DIY Radio Control system by M5Stack
 
 ![IMG_RC_SYSTEM](https://user-images.githubusercontent.com/64751855/154823502-b6f40bb0-9fc7-4578-9e62-ac9f5db41d3a.jpg)
 
-- M5RadioControl（M5RC）は、RCシステムの送受信機TX/RXをM5Stackマイコンで自作するためのオープンソースソフトウェアです。
-- RCシステムの標準機能（ペアリング、トリム、リバース、D/R、EPA、EXP設定など）に加えて独自機能を実現しています。
-- 独自機能とは、"ダンシングライダー"感覚の操縦機能、"走る実験室"感覚のIMUテレメータ表示／ロギング機能等です。
+- M5RadioControl（M5RC）は、RCシステム（プロポ）の送受信機TX/RXをM5Stackマイコンで自作するためのオープンソースソフトウェアです。
+- RCプロポの標準機能（ペアリング、トリム、リバース、D/R、EPA、EXP設定など）に加えて独自機能を実現しています。
+- 独自機能は、"ダンシングライダー"気分の操縦機能、"走る実験室"気分のIMUテレメータ表示／ロギング機能等です。
 - 送信機TXは"M5Stack Gray"、受信機RXは"M5Atom Matrix/M5StickC"で動作確認済みです。
-- TX/RX間の通信は、"ESP-NOW"を利用して下り（TXからRXへ）約100Hz、上り（RXからTXへ）約300Hz、到達距離20m程度です。
+- TX/RX間の通信は、"ESP-NOW"を利用して、下り（TXからRXへ）約100Hz、上り（RXからTXへ）約300Hz、到達距離20m程度です。
 
 
 # DEMO
 
-M5RCシステムをタミヤのRCカーとミニ四駆へ搭載した事例です。
+M5RCシステムをタミヤのRCカー（グラスホッパー２）とミニ四駆（FM-A）へ搭載した事例です。
 
 ![M5RC_GR02](https://user-images.githubusercontent.com/64751855/155876897-721a2c08-705e-47fc-a46e-67b262cabae8.jpg)
 
@@ -20,25 +20,32 @@ M5RCシステムをタミヤのRCカーとミニ四駆へ搭載した事例で�
 
 
 # Features
-退屈な標準機能をすっ飛ばして"ロマン溢れる"独自機能を概説します。
+退屈な標準機能の解説をすっ飛ばして、独自機能のロマン溢れる使い方を解説します。
 
 ## ダンシング操縦機能
 送信機TXのグリップ自体を「操縦桿」の様に傾けることでRCカーを操縦できます。
-例えばタミヤT3-01を操縦すると、貴方はダンシングライダー（オジさん）の世界に浸れます。
+例えばタミヤT3-01を操縦すると、貴方はダンシングライダー（オジサン）の世界に没入できます。
+
+![T3-01](https://d7z22c0gz59ng.cloudfront.net/japan_contents/img/usr/item/5/57405/57405_1.jpg)
 
 
 ## テレメータ／ロギング機能
 RCカー搭載IMUのテレメータ／ロギングにより、貴方専用の「走る実験室」を実現できます。
 走行データの定量分析により、貴方はホンダのF-1エンジニア気分でRCカーをセッティングできます。
 
+以下は、[RCカー練習場「元気っ子さん」](https://genkikkosan.com/)ミニ四駆コースの走行データ例です。
 ![M4WD-plot](https://user-images.githubusercontent.com/64751855/155877157-9e4e1bb6-cacd-4e34-a1aa-a5ffe0449518.png)
-
 ![M4WD-traj](https://user-images.githubusercontent.com/64751855/155877205-44e6fe6a-db0b-4bdb-b37e-8a9ab7ada5a0.png)
 
 
 ## ステアリング・ジャイロ機能
 RCカーのステアリング操作をPIDコントローラが優しくアシストしてスピンを防ぎます。
 例えばヨコモYD-2に搭載すると、貴方は安全かつ地球に優しく頭文字Ｄの世界に浸れます。
+
+![M5RC_DRIFT](https://user-images.githubusercontent.com/64751855/156068585-76c348eb-bc47-495f-889b-ec987f2f0023.jpg)
+
+ジャイロ機能のソフトウェアは、[ラジドリ用ジャイロGyroM5](https://github.com/hshin-git/GyroM5)を流用しています。
+PIDコントローラのパラメータは、プロポ（送信機）側メニューから設定して即反映です。
 
 
 ## ドレミファ・インバータ機能
@@ -54,14 +61,16 @@ RCカーのステアリング操作をPIDコントローラが優しくアシス
 
 
 # Usage
-多機能なソフトウェアなので、ぼちぼち追記していきます。
+多機能なソフトウェアなので、ぼちぼち追記します。
 
 
 
 # Reference
 
-https://note.com/nanami00/n/n3a1958d79433
-https://protopedia.net/prototype/2351
-https://github.com/hshin-git/GyroM5
+- [ラジドリ用ジャイロGyroM5＠github](https://github.com/hshin-git/GyroM5)
+- [ラジドリ用ジャイロGyroM5＠protopedia](https://protopedia.net/prototype/2351)
+- [3000円で至高の二駆ドリジャイロをゲットできたけど少し反省した話＠note](https://note.com/nanami00/n/n3a1958d79433)
+
+
 
 
