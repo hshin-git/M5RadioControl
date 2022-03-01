@@ -46,7 +46,7 @@ RCカーのステアリング操作をPIDコントローラが素早くアシス
 
 ![M5RC_DRIFT](https://user-images.githubusercontent.com/64751855/156068585-76c348eb-bc47-495f-889b-ec987f2f0023.jpg)
 
-ジャイロ機能のソースコードは、[ラジドリ用ジャイロGyroM5](https://github.com/hshin-git/GyroM5)を流用しています。
+ソースコードは、[ラジドリ用ジャイロGyroM5](https://github.com/hshin-git/GyroM5)を流用しています。
 PIDコントローラのパラメータ調整は、プロポ（送信機）側メニューから設定して即反映のお手軽さです。
 
 
@@ -57,11 +57,15 @@ PIDコントローラのパラメータ調整は、プロポ（送信機）側�
 ![RAILWAY_HDR](https://user-images.githubusercontent.com/64751855/156074703-8c3c4c0f-50f9-492a-83f9-2223110b4df2.jpg)
 
 
+
 # Requirement
 
 - 送信機TXハードウェアは、「M5Stack Gray」と「A/Dコンバータ(I2C接続)」
 - 受信機RXハードウェアは、「M5Atom Matrix」または「M5StickC」
 - ホビー用RCカー、サーボとESC（電子式スピードコントローラ）など
+
+![M5RC-System](https://user-images.githubusercontent.com/64751855/156155080-d2c6f90a-a046-4abf-87f2-2449d05977ad.png)
+
 
 
 # Usage
