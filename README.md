@@ -3,8 +3,8 @@ DIY Radio Control system by M5Stack
 
 ![IMG_RC_SYSTEM](https://user-images.githubusercontent.com/64751855/154823502-b6f40bb0-9fc7-4578-9e62-ac9f5db41d3a.jpg)
 
-- M5RadioControl（M5RC）は、RCプロポの送受信機TX/RXをM5Stackで自作するためのオープンソースソフト（OSS）です。
-- RCプロポの標準機能（ペアリング、モデルメモリ、トリム、リバース、D/R、EPA、EXP等）に加えて独自機能を実現しています。
+- M5RadioControl（M5RC）は、RCシステムの送受信機TX/RXをM5Stackで自作するためのオープンソースソフト（OSS）です。
+- RCシステムの標準機能（ペアリング、モデルメモリ、トリム、リバース、D/R、EPA、EXP等）に加えて独自機能を実現しています。
 - 独自機能は、「ダンシングライダー」気分の操縦機能、「走る実験室」気分のテレメータ／ロギング機能等です。
 - 送信機TXは「M5Stack Gray」、受信機RXは「M5Atom Matrix」と「M5StickC」で動作確認済みです。
 - TX/RX間の通信は、「ESP-NOW」を利用して、下り（TXからRXへ）約100Hz、上り（RXからTXへ）約300Hz、到達距離20m程度です。
@@ -36,7 +36,7 @@ RCカー搭載IMU（慣性計測ユニット）のテレメータ／ロギング
 ![M4WD-traj](https://user-images.githubusercontent.com/64751855/156074555-eef4edac-f4a1-41a3-a283-c758bf34b154.png)
 
 こちらはミニ四駆コース＠[RCカー練習場「元気っ子さん」](https://genkikkosan.com/)の走行データ例（三週目でコースアウト）です。
-IMUデータは、シャーシ固定系に関する成分表示で、右方がx成分、前方がy成分、上方がz成分です。
+IMUデータは、シャーシ固定座標系に対する成分表示で、右がx軸、前がy軸、上がz軸です。
 3D軌跡は、車速vyがスロットル（ch2）に比例すると仮定してAHRS計算値（pitch、yaw）を積算した結果です。
 センサ値に少しバイアスが乗っていますが、走行データから三次元的なコースレイアウトが分かります。
 
@@ -48,7 +48,7 @@ RCカーのステアリング操作をPIDコントローラが素早くアシス
 ![M5RC_DRIFT](https://user-images.githubusercontent.com/64751855/156068585-76c348eb-bc47-495f-889b-ec987f2f0023.jpg)
 
 ソースコードは、こちらの[ラジドリ用ジャイロGyroM5](https://github.com/hshin-git/GyroM5)を流用しています。
-PIDコントローラのパラメータ調整は、プロポ（送信機）側メニューから設定して即反映というお手軽さです。
+PIDコントローラのパラメータ調整は、プロポ（送信機）側メニューから設定すると即反映のお手軽さです。
 
 
 ## ドレミファ・インバータ機能
