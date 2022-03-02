@@ -3,7 +3,7 @@ DIY Radio Control system by M5Stack
 
 ![IMG_RC_SYSTEM](https://user-images.githubusercontent.com/64751855/154823502-b6f40bb0-9fc7-4578-9e62-ac9f5db41d3a.jpg)
 
-- M5RadioControl（M5RC）は、RCシステムの送受信機TX/RXをM5Stackで自作するためのオープンソースソフト（OSS）です。
+- M5RadioControl（M5RC）は、RCシステムの送信機TX/受信機RXをM5Stackで自作するためのオープンソースソフト（OSS）です。
 - RCシステムの標準機能（ペアリング、モデルメモリ、トリム、リバース、D/R、EPA、EXP等）に加えて独自機能を実現しています。
 - 独自機能は、「ダンシングライダー」気分の操縦機能、「走る実験室」気分のテレメータ／ロギング機能等です。
 - 送信機TXは「M5Stack Gray」、受信機RXは「M5Atom Matrix」と「M5StickC」で動作確認済みです。
