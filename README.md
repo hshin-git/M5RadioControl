@@ -47,7 +47,7 @@ RCカーのステアリング操作をPIDコントローラが素早くアシス
 
 ![M5RC_DRIFT](https://user-images.githubusercontent.com/64751855/156068585-76c348eb-bc47-495f-889b-ec987f2f0023.jpg)
 
-ソースコードは、こちらの「[ラジドリ用ジャイロGyroM5](https://github.com/hshin-git/GyroM5)」を流用しています。
+ソースコードは、こちらの「[ラジドリ用ジャイロGyroM5](https://protopedia.net/prototype/2351)」を流用しています。
 PIDコントローラのパラメータ調整は、プロポ（送信機）側メニューから設定すると即反映のお手軽さです。
 
 
