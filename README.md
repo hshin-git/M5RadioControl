@@ -37,8 +37,8 @@ RCカー搭載IMU（慣性計測ユニット）のテレメータ／ロギング
 
 こちらはミニ四駆コース＠[RCカー練習場「元気っ子さん」](https://genkikkosan.com/)の走行データ例（三週目でコースアウト）です。
 IMUデータは、シャーシ固定座標系に対する成分表示で、右がx軸、前がy軸、上がz軸です。
-3D軌跡は、車速vyがスロットル（ch2）に比例すると仮定してAHRS計算値（pitch、yaw）を積算した結果です。
-センサ値に少しバイアスが乗っていますが、走行データから三次元的なコースレイアウトが分かります。
+3D軌跡は、車速vyがスロットル（ch2）に比例すると仮定してAHRS計算値（pitch、yaw）を積分した結果です。
+AHRS計算値に少しバイアスが乗っていますが、走行データから三次元的なコースレイアウトが分かります。
 
 
 ## ステアリング・ジャイロ機能
@@ -47,7 +47,7 @@ RCカーのステアリング操作をPIDコントローラが素早くアシス
 
 ![M5RC_DRIFT](https://user-images.githubusercontent.com/64751855/156068585-76c348eb-bc47-495f-889b-ec987f2f0023.jpg)
 
-ソースコードは、こちらの[ラジドリ用ジャイロGyroM5](https://github.com/hshin-git/GyroM5)を流用しています。
+ソースコードは、こちらの「[ラジドリ用ジャイロGyroM5](https://github.com/hshin-git/GyroM5)」を流用しています。
 PIDコントローラのパラメータ調整は、プロポ（送信機）側メニューから設定すると即反映のお手軽さです。
 
 
@@ -76,10 +76,15 @@ PIDコントローラのパラメータ調整は、プロポ（送信機）側�
 
 # Reference
 
+## ラジコン関係
 - [ラジドリ用ジャイロGyroM5＠github](https://github.com/hshin-git/GyroM5)
 - [ラジドリ用ジャイロGyroM5＠protopedia](https://protopedia.net/prototype/2351)
 - [3000円で至高の二駆ドリジャイロをゲットできたけど少し反省した話＠note](https://note.com/nanami00/n/n3a1958d79433)
 
-
-
+## 電子部品関係
+- [M5Stack Gray@スイッチサイエンス](https://www.switch-science.com/catalog/3648/)
+- [M5Atom Matix@スイッチサイエンス](https://www.switch-science.com/catalog/6260/)
+- [4ch/16bit/I2CのADコンバータ@amazon](https://www.amazon.co.jp/dp/B01D0WSCNG)
+- [大電流ブラシモータ用ドライバ@amazon](https://www.amazon.co.jp/dp/B00WSN98DC/)
+- [小電流ブラシモータ用ドライバ@amazon](https://www.amazon.co.jp/dp/B071SJ4T9M/)
 
