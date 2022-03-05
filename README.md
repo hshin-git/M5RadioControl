@@ -68,6 +68,60 @@ PIDコントローラのパラメータ調整は、プロポ（送信機）側�
 ![M5RC-System](https://user-images.githubusercontent.com/64751855/156155080-d2c6f90a-a046-4abf-87f2-2449d05977ad.png)
 
 
+## M5TXの配線
+M5Stackは、GROVEポート経由でADコンバータと接続します。
+M5Stackの筐体は、適当な方法でRC送信機の筐体に固定してください。
+例えばスマホ用メタルプレートをRC送信機に取り付けた上、M5Stackをマグネット留めすると着脱が容易です。
+
+|M5Stack Gray |in/out |ADC (ADS1115) |
+|---- |---- |---- |
+|GND  |out |GND |
+|5V   |out |VDD |
+|G21(SDA) |in/out |SDA |
+|G22(SCL) |out    |SCL |
+
+ADコンバータは、RC送信機TXのステアリング／スロットル位置検出用の可変抵抗（VRのA/B/C端子）と接続します。
+ADコンバータの入力チャンネルA3は、電圧VDDの測定用に使うので正味のチャンネル数は3です。
+
+|ADC (ADS1115) |in/out |TX (VR) |
+|---- |---- |---- |
+|GND  |out |VR (A) |
+|VDD  |out |VR (C) |
+|A0   |in  |VR (B1) |
+|A1   |in  |VR (B2) |
+|A3   |in  |VR (C) |
+
+なおTI製ADS1115のサンプリングレートは最大800回/秒なので、3ch計測なら最大800/3=266回/秒です。
+これにI2C通信やパケット送信の時間を加えた結果、最終的なM5TXの送信周期は約100回/秒でした。
+より高速なADコンバータを利用すれば、M5TXの送信周期は更に高められそうです。
+
+
+## M5RXの配線
+M5Atomは、ホビー用RCユニット（サーボ、ESC）の電源及び信号線（-/+/S）と接続します。
+GROVE端子は、自作モータードライバ（H-bridge）のゲート信号出力用に使います。
+
+|M5Atom |in/out |RC Units |
+|---- |---- |---- |
+|GND  |out |RC (-) |
+|5V   |out |RC (+) |
+|G22  |out |RC (S1) |
+|G19  |out |RC (S2) |
+|G26  |out |DIY-ESC |
+|G32  |out |DIY-ESC |
+
+
+M5StickCの場合、以下のように接続します。
+
+|M5StickC |in/out |RC Units |
+|---- |---- |---- |
+|GND  |out |RC(-) |
+|5Vin |out |RC(+) |
+|G26  |out |RC(S1) |
+|G0   |out |RC(S2) |
+|G32  |out |DIY-ESC |
+|G33  |out |DIY-ESC |
+
+
 
 # Usage
 多機能なソフトウェアなので、ぼちぼち追記します。
