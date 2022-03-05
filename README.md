@@ -102,8 +102,8 @@ GROVE端子は、自作モータードライバ（H-bridge）のゲート信号�
 
 |M5Atom |in/out |RC Units |
 |---- |---- |---- |
-|GND  |out |RC (-) |
-|5V   |out |RC (+) |
+|GND  |in |RC (-) |
+|5V   |in |RC (+) |
 |G22  |out |RC (S1) |
 |G19  |out |RC (S2) |
 |G26  |out |DIY-ESC |
@@ -114,8 +114,8 @@ M5StickCの場合、以下のように接続します。
 
 |M5StickC |in/out |RC Units |
 |---- |---- |---- |
-|GND  |out |RC(-) |
-|5Vin |out |RC(+) |
+|GND  |in |RC(-) |
+|5Vin |in |RC(+) |
 |G26  |out |RC(S1) |
 |G0   |out |RC(S2) |
 |G32  |out |DIY-ESC |
