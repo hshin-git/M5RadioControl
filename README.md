@@ -6,8 +6,8 @@ DIY Radio Control system by M5Stack
 - [M5RadioControl（M5RC）](https://github.com/hshin-git/M5RadioControl)は、RCシステムの送信機TX/受信機RXをM5Stackで自作するためのオープンソースソフト（OSS）です。
 - RCシステムの標準機能（ペアリング、モデルメモリ、トリム、リバース、D/R、EPA、EXP等）に加えて独自機能を実現します。
 - 独自機能は、「ダンシングライダー」気分の操縦機能、「走る実験室」気分のテレメータ／ロギング機能等です。
-- 送信機TXは「M5Stack Gray」、受信機RXは「M5Atom Matrix」と「M5StickC」で動作確認済みです。
-- TX/RX間の通信は、「ESP-NOW」を利用して、下り（TXからRXへ）約100Hz、上り（RXからTXへ）約300Hz、到達距離20m程度です。
+- 送信機TXは「[M5Stack Gray](https://docs.m5stack.com/en/core/gray)」、受信機RXは「[M5Atom Matrix](https://docs.m5stack.com/en/core/atom_matrix)」と「[M5StickC](https://docs.m5stack.com/en/core/m5stickc)」で動作確認済みです。
+- TX/RX間の通信は、「[ESP-NOW](https://github.com/espressif/esp-now)」を利用して、下り（TXからRXへ）約100Hz、上り（RXからTXへ）約300Hz、到達距離20m程度です。
 
 
 # DEMO
@@ -30,14 +30,14 @@ M5RCシステムをタミヤ製のRCカー（グラスホッパー２）とミ�
 
 ## テレメータ／ロギング機能
 RCカー搭載IMU（慣性計測ユニット）のテレメータ／ロギングにより、貴方専用の「走る実験室」をお手軽に実現できます。
-走行データの定量分析により「ホンダF1のエンジニア」気分でデータドリブンにRCカーをチューニングできます。
+走行データの定量分析により「ホンダF1のエンジニア」気分でデータドリブンにマシンをセッティングできます。
 
 ![M4WD-plot](https://user-images.githubusercontent.com/64751855/155877157-9e4e1bb6-cacd-4e34-a1aa-a5ffe0449518.png)
 ![M4WD-traj](https://user-images.githubusercontent.com/64751855/156074555-eef4edac-f4a1-41a3-a283-c758bf34b154.png)
 
 こちらは[ミニ四駆コース](https://genkikkosan.com/)の走行データ例（三週目の立体交差でコースアウト）です。
-IMUデータは、シャーシ固定座標系に対する成分表示で、右がx軸、前がy軸、上がz軸です。
-3D軌跡は、車速vyがスロットル（ch2）に比例すると仮定してAHRS計算値（pitch、yaw）を積分した結果です。
+IMUデータは、シャーシ固定座標系に対する成分表示で、右がx成分、前がy成分、上がz成分です。
+3D軌跡は、車速vyがスロットル（ch2）に比例すると仮定してAHRS計算値（pitch、yaw）を積算した結果です。
 AHRS計算値に少しバイアスが乗っていますが、走行データから三次元的なコースレイアウトが分かります。
 
 
@@ -61,19 +61,35 @@ PIDコントローラのパラメータ調整は、プロポ（送信機）側�
 
 # Requirement
 
-- 送信機TXハードウェアは、「M5Stack Gray」と「A/Dコンバータ(I2C接続)」
-- 受信機RXハードウェアは、「M5Atom Matrix」または「M5StickC」
-- ホビー用RCカー、サーボとESC（電子式スピードコントローラ）など
+## Software
+- M5RCのFW開発環境: 「[ArduinoIDE](https://www.arduino.cc/en/software)」（必須、[M5TX](/M5TX)/[M5RX](/M5RX)コンパイル&マイコン転送用）
+- IMUデータ分析環境: 「[Python/Anaconda](https://www.anaconda.com/products/individual)」（テレメータ／ロギング機能利用時のみ、[tool](/tool)実行用）
+
+
+## Hardware
+- M5RC送信機TX: 「[M5Stack Gray](https://docs.m5stack.com/en/core/gray)」「A/Dコンバータ(I2C接続)」と「RC送信機の筐体（コントローラ）」
+- M5RC受信機RX: 「[M5Atom Matrix](https://docs.m5stack.com/en/core/atom_matrix)」または「[M5StickC](https://docs.m5stack.com/en/core/m5stickc)」と「RC受信機の配線（ワイヤハーネス）」
+- ホビー用RCカー: RCカーのシャーシ、ステアリング用サーボとスロットル用ESC（電子式スピードコントローラ）
 
 ![M5RC-System](https://user-images.githubusercontent.com/64751855/156860549-5ae9e112-885b-40f1-bd0b-b161a9fb3487.png)
 
 
-## M5TXの配線
+
+# Installation
+
+## Sotware
+- M5RC送信機TX: ファームウェア[M5TX](/M5TX)を[ArduinoIDE](https://www.arduino.cc/en/software)でコンパイルして「[M5Stack Gray](https://docs.m5stack.com/en/core/gray)」に転送します。
+- M5RC受信機RX: ファームウェア[M5RX](/M5RX)を[ArduinoIDE](https://www.arduino.cc/en/software)でコンパイルして「[M5Atom Matrix](https://docs.m5stack.com/en/core/atom_matrix)」に転送します。
+
+
+## Hadware
+
+### M5TXの配線
 M5Stackは、GROVEポート経由でADコンバータと接続します。
 M5Stackの筐体は、適当な方法でRC送信機の筐体に固定してください。
 例えばスマホ用メタルプレートをRC送信機に取り付けた上、M5Stackをマグネット留めすると着脱が容易です。
 
-|M5Stack Gray |in/out |ADC (ADS1115) |
+|M5Stack Gray |in/out |ADC |
 |---- |---- |---- |
 |GND  |out |GND |
 |5V   |out |VDD |
@@ -83,7 +99,7 @@ M5Stackの筐体は、適当な方法でRC送信機の筐体に固定してく�
 ADコンバータは、RC送信機TXのステアリング／スロットル位置検出用の可変抵抗（VRのA/B/C端子）と接続します。
 ADコンバータの入力チャンネルA3は、電圧VDDの測定用に使うので正味のチャンネル数は3です。
 
-|ADC (ADS1115) |in/out |TX (VR) |
+|ADC |in/out |TX (VR) |
 |---- |---- |---- |
 |GND  |out |VR (A) |
 |VDD  |out |VR (C) |
@@ -91,12 +107,12 @@ ADコンバータの入力チャンネルA3は、電圧VDDの測定用に使う�
 |A1   |in  |VR (B2) |
 |A3   |in  |VR (C) |
 
-なおTI製ADS1115のサンプリングレートは最大800回/秒なので、3ch計測なら最大800/3=266回/秒です。
+なお標準的なADコンバータTI製ADS1115の場合、サンプリングレートが最大860回/秒なので、3ch計測のとき最大860/3=286回/秒です。
 これにI2C通信やパケット送信の時間を加えた結果、最終的なM5TXの送信周期は約100回/秒でした。
 より高速なADコンバータを利用すれば、M5TXの送信周期は更に高められそうです。
 
 
-## M5RXの配線
+### M5RXの配線
 M5Atomは、ホビー用RCユニット（サーボ、ESC）の電源及び信号線（-/+/S）と接続します。
 GROVE端子は、自作モータードライバ（H-bridge）のゲート信号出力用に使います。
 
@@ -126,6 +142,10 @@ M5StickCの場合、以下のように接続します。
 # Usage
 多機能なソフトウェアなので、ぼちぼち追記します。
 
+- 送信機TX画面: 左側エリアがバラメータ表示（縦スクロール）、右側エリアがコマンド／IMUデータ表示（カーソル移動）です。
+- 送信機TX操作: パラメータ選択時はボタン「[A]上へ、[C]下へ、[B]決定」、パラメータ調整時はボタン「[A]減らす、ボタン[C]増やす、[B]決定」の操作です。
+- ペアリング: 受信機RX側はボタン[A]を押して起動、送信機TX側はメニュー「pairing」選択で、ペアリングモードに入ります。
+- 注意点など: 送信機TX側はA/Dコンバータを外して電源オンすると起動中にブロックします（I2C通信にタイムアウトが無いので）。
 
 
 # Reference
