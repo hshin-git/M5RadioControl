@@ -544,6 +544,7 @@ public:
     Max = 2000 - Mean;
     //
     QPID = new QuickPID(&Input, &Output, &Setpoint, 1.0,0.0,0.0, QuickPID::Action::direct);
+    QPID->SetAntiWindupMode(QuickPID::iAwMode::iAwClamp);
     QPID->SetMode(QuickPID::Control::automatic);
     QPID->SetOutputLimits(Min,Max);
     QPID->SetSampleTimeUs(1000000/50);
