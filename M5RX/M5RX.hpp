@@ -16,6 +16,8 @@
 //  setup(): 入力ピンの初期化
 //  getUsec(): 入力パルス幅[usec]
 //  getFreq(): 入力パルス周波数[Hz]
+//  setupMean(): 入力パルス平均
+//  getUsecMean(): 入力パスル平均[usec]
 //  attach(): 割り込み処理の再開
 //  detach(): 割り込み処理の中止
 //  setupOut(): 出力ピンの初期化

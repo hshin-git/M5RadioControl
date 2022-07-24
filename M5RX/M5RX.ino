@@ -231,7 +231,8 @@ void loop()
     // steering assist
     if (i==0 && (RX_CONF.gpid&0x1)) {
       float SP = USEC[0];
-      float PV = RX_CONF.gain[0] * RX_AHRS.getYawRate();
+      float PV = RX_CONF.gain[0] * GYRO[2];
+      //float PV = RX_CONF.gain[0] * RX_AHRS.getYawRate();
       USEC[0] = CH1_PID.loop(SP,PV);
     }
 #if 0
